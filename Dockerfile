@@ -81,10 +81,13 @@ FROM rust:1.58.1-alpine as base-optimizer
 
 # Being required for gcc linking
 RUN apk update && \
-  apk add --no-cache musl-dev
+  apk add --no-cache musl-dev protoc
 
 # Setup Rust with Wasm support
 RUN rustup target add wasm32-unknown-unknown
+
+# Check protoc version
+RUN protoc --version
 
 # Add wasm-opt
 COPY --from=builder /usr/local/bin/wasm-opt /usr/local/bin
